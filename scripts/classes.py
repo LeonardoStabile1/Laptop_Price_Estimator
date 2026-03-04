@@ -21,10 +21,6 @@ class DataCleaner(BaseEstimator, TransformerMixin):
         if 'Memory' in X_copy.columns:
             X_copy = X_copy.drop(columns=['Memory'])
 
-        if X_copy.isna().sum().sum() > 0:
-            print("Warning: Dropping remaining rows with NaNs")
-            X_copy = X_copy.dropna()
-
         return X_copy
     
 class GPUTierExtractor(BaseEstimator, TransformerMixin):

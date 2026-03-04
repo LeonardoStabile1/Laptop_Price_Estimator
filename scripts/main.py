@@ -1,6 +1,6 @@
 from classes import *
 from functions import *
-from pipelines import full_pipeline
+from pipelines import *
 from model_train import *
 #----------------------------------
 
@@ -10,6 +10,7 @@ import numpy as np
 #-----------------------------------
 
 from sklearn.metrics import mean_squared_error
+from scipy import stats
 
 DATASET_URL="dataset/Laptops.csv"
 
@@ -17,13 +18,24 @@ raw_data=import_data(DATASET_URL)
 
 data, test_set = split_data(raw_data)
 data = cut_price_outliers(data)
-target = log_target(data)
 
-print("Dados carregados e tratados. Iniciando Pipeline treino")
+X_train = data.drop("Price", axis=1)
+Y_train = log_target(data)
 
-final_pipeline=full_pipeline(data)
-dataset_prepared = final_pipeline.fit_transform(data)
+X_test = test_set.drop("Price", axis=1)
+Y_test = log_target(test_set)
 
-model,best_parameters = train_RFR_random(dataset_prepared, target)
 
-print("Best parameters are: " +best_parameters)
+num_cols, cat_cols = get_attribs(X_train)
+
+final_pipeline = full_pipeline(num_cols, cat_cols) 
+
+dataset_prepared = final_pipeline.fit_transform(X_train)
+
+model, best_parameters = train_RFR_random(dataset_prepared, Y_train)
+
+rmse, interval = comparison(X_test,Y_test, final_pipeline, model)
+
+save_results_txt(best_parameters, rmse, interval)
+
+export_model(model, full_pipeline)

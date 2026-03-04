@@ -32,7 +32,7 @@ def train_RFR_random(dataset_prepared, target):
     random_search = RandomizedSearchCV(
         estimator=new_forest_reg,
         param_distributions=param_dist,
-        n_iter=50,                                
+        n_iter=100,                                
         cv=5,
         scoring='neg_mean_squared_error',
         return_train_score=True,
@@ -41,8 +41,8 @@ def train_RFR_random(dataset_prepared, target):
     )
 
 
-    print("Iniciando a busca de hiperparâmetros. Isso pode levar alguns minutos...")
+    print("Starting the hyperparameter fitting. This can take some time...")
     random_search.fit(dataset_prepared, target)
-    print("Busca concluída!")
+    print("Finished!")
 
     return random_search.best_estimator_, random_search.best_params_

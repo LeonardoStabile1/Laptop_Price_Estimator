@@ -1,8 +1,12 @@
 import requests
 import pandas as pd
 import numpy as np
-
+import os
+from scipy import stats
+import joblib
+from datetime import datetime
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
 
 def cut_price_outliers(df):
     if 'Price' not in df.columns:
@@ -58,3 +62,67 @@ def split_data(dataset, test_size=0.2, random_state=42):
     return train_set, test_set
 
 
+def comparison(x_test,y_test, pipeline, model, confidence = 0.95):
+    X_test_prepared = pipeline.transform(x_test) 
+    final_predictions = model.predict(X_test_prepared)
+    predictions_usd = np.exp(final_predictions)
+    Y_test_usd = np.exp(y_test)
+    final_mse_usd = mean_squared_error(Y_test_usd, predictions_usd)
+    final_rmse_usd = np.sqrt(final_mse_usd)
+    squared_errors_usd = (predictions_usd - Y_test_usd) ** 2
+    mean_sq_err_usd = squared_errors_usd.mean()
+    standard_error_usd = stats.sem(squared_errors_usd)
+    interval_usd = np.sqrt(stats.t.interval(
+        confidence, 
+        len(squared_errors_usd) - 1, 
+        loc=mean_sq_err_usd, 
+        scale=standard_error_usd
+    ))
+    return final_rmse_usd, interval_usd
+
+
+def save_results_txt(best_params, rmse, confidence_interval, file_name="results/model_report.txt"):
+    """
+    Saves model metrics and hyperparameters to a text file.
+    Automatically creates the destination folder if it doesn't exist.
+    """
+    # Create directory if it doesn't exist
+    dir_name = os.path.dirname(file_name)
+    if dir_name and not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    with open(file_name, "w", encoding="utf-8") as f:
+        f.write(f"TRAINING REPORT - {timestamp}\n")
+        f.write(f"Model: RandomForestRegressor with RandomizedSearchCV\n")
+        f.write("="*50 + "\n")
+        f.write("BEST HYPERPARAMETERS FOUND:\n")
+
+        for param, value in best_params.items():
+            f.write(f" - {param}: {value}\n")
+        
+        f.write("\nTEST SET PERFORMANCE:\n")
+        f.write(f" - Final RMSE: ${rmse:.2f}\n")
+        f.write(f" - 95% Confidence Interval: ${confidence_interval[0]:.2f} to ${confidence_interval[1]:.2f}\n")
+        f.write("="*50 + "\n")
+        
+    print(f"Report successfully saved to: {file_name}")
+
+def export_model(model, pipeline, file_name="models/final_model_prod.pkl"):
+    """
+    Exports the model and the pipeline as a single dictionary object.
+    Automatically creates the destination folder if it doesn't exist.
+    """
+    # Create directory if it doesn't exist
+    dir_name = os.path.dirname(file_name)
+    if dir_name and not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+
+    data_to_save = {
+        "model": model,
+        "full_pipeline": pipeline
+    }
+    
+    joblib.dump(data_to_save, file_name)
+    print(f"Model and Pipeline exported to: {file_name}")
