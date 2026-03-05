@@ -86,22 +86,38 @@ The `ml_algorithm.py` file defines the MachineLearning Algorithm and the paramet
 
 ```
 ml_algorithm.py
-└── def train_RFR_random() # Implements the RandomForestRegressor() and search the best parameters randomly
+├── def train_RFR_random() # Implements the RandomForestRegressor() and search the best parameters randomly
+└── def train_XGB_random() #  Implements the XGBRegressor() and search the best parameters randomly
 ```
 
-The `model_train.py` file applies the necessary routines and pipelines in order to train and test the model. At last, it proceeds to extract the model, the pipeline and the results log.
+The `model_train.py` file applies the necessary routines and pipelines in order to train and test the two models. At last, it evaluate which model performed best then proceeds to extract the model, the pipeline and the results log.
 
 After the training and testing, the model is applied to a synthetic csv dataset, generated using AI to simualte a real production environment by using the `evaluate.py` method.
 
 ## Performance Results
-After rigorous hyperparameter tuning and the implementation of the target-variable log transformation, the model achieved the following results on the unseen test set:
+After rigorous hyperparameter tuning and the implementation of the target-variable log transformation, the XGBoost model achieved the following results on the unseen test set:
 
 | Metric | Value |
 | :--- | :--- |
-| **Root Mean Squared Error (RMSE)** | **$209.10** |
-| **95% Confidence Interval** | **$150.25 to $254.70** |
+| **Root Mean Squared Error (RMSE)** | **$195.61** |
+| **95% Confidence Interval** | **$141.17 to $237.91** |
 
+### Actual vs. Predicted Analysis
+The following figure illustrates the relationship between the actual market prices and the prices estimated by the model. The alignment with the "Ideal" line indicates how well the model captures the price distribution across different hardware tiers.
+
+![Actual vs Predicted Prices](figures/actual_vs_predicted_XGB.png)
+
+---
+
+## 🔍 Key Insights
 
 ### What do these metrics mean?
-* **RMSE ($209.10):** On average, the model's price predictions deviate from the actual market price by approximately $209 on the `test_set`. Considering the laptop market features high variance (with prices ranging from $200 budget netbooks to $3,000+ high-end gaming rigs), this error margin demonstrates that the model captures the underlying pricing patterns highly effectively.
-* **Confidence Interval:** We can be 95% confident that the true average prediction error of this model lies between $150.25 and $254.70. This narrow band indicates a stable and reliable model that doesn't suffer from wild, unpredictable fluctuations in its estimates.
+* **RMSE ($195.61):** On average, the model's price predictions deviate from the actual market price by approximately **$195.61**. Considering the laptop market features high variance—with prices ranging from $200 budget netbooks to $3,000+ high-end gaming rigs—this error margin demonstrates that the model captures underlying pricing patterns highly effectively.
+* **Confidence Interval:** We can be **95% confident** that the true average prediction error of this model lies between **$141.17 and $237.91**. This narrow band indicates a stable and reliable model that doesn't suffer from wild, unpredictable fluctuations in its estimates.
+
+### Model Behavior & Evolution
+* **Linearity and Scaling:** By using a log transformation on the target variable, the model successfully handled the heteroscedasticity (varying error scales) typical of price data. 
+* **XGBoost Advantage:** Compared to previous iterations (Random Forest), the XGBoost regressor showed a superior ability to follow the price trend for mid-to-high-range laptops (up to $1,600), significantly reducing the systematic underestimation previously observed.
+* **Residual Challenges:** High-end "outlier" laptops (above $2,000) still present a challenge. This suggests that price-driving factors for luxury or specialized hardware (e.g., specific GPU models or build materials) may require further feature engineering to be fully captured.
+
+---

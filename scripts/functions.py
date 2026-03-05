@@ -88,7 +88,7 @@ def comparison(x_test,y_test, pipeline, model, confidence = 0.95):
     return final_rmse_usd, interval_usd
 
 
-def save_results_txt(best_params, rmse, confidence_interval, file_name="models/results/model_report.txt"):
+def save_results_txt(best_params, rmse, confidence_interval, model_name, file_name="models/results/model_report.txt"):
     """
     Saves model metrics and hyperparameters to a text file.
     Automatically creates the destination folder if it doesn't exist.
@@ -102,7 +102,7 @@ def save_results_txt(best_params, rmse, confidence_interval, file_name="models/r
     
     with open(file_name, "w", encoding="utf-8") as f:
         f.write(f"TRAINING REPORT - {timestamp}\n")
-        f.write(f"Model: RandomForestRegressor with RandomizedSearchCV\n")
+        f.write(f"Model: ${model_name} with RandomizedSearchCV\n")
         f.write("="*50 + "\n")
         f.write("BEST HYPERPARAMETERS FOUND:\n")
 
