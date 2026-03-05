@@ -1,0 +1,15 @@
+TRAINING REPORT - 2026-03-05 14:44:04
+Model: RandomForestRegressor with RandomizedSearchCV
+==================================================
+BEST HYPERPARAMETERS FOUND:
+ - bootstrap: False
+ - max_depth: 20
+ - max_features: sqrt
+ - min_samples_leaf: 1
+ - min_samples_split: 3
+ - n_estimators: 352
+
+TEST SET PERFORMANCE:
+ - Final RMSE: $209.10
+ - 95% Confidence Interval: $150.25 to $254.70
+==================================================

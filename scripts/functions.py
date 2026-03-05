@@ -8,6 +8,19 @@ from datetime import datetime
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 
+
+
+def import_data(dataset_url):
+    dataset=pd.read_csv(dataset_url)
+    return dataset
+    
+
+def split_data(dataset, test_size=0.2, random_state=42):
+    train_set, test_set = train_test_split(dataset, test_size=test_size, random_state=random_state)
+    return train_set, test_set
+
+
+
 def cut_price_outliers(df):
     if 'Price' not in df.columns:
         print(" 'Price' Column not include on the dataset.")
@@ -15,13 +28,6 @@ def cut_price_outliers(df):
     new_df = df[df['Price'] < 150000].copy()
     return new_df
 
-
-def target_extraction(dataset):
-    return clean_target(dataset)
-
-def log_target(target):
-    extracted_target = target_extraction(target)
-    return np.log(extracted_target)
 
 def price_to_usd(df):
     if not isinstance(df, pd.DataFrame):
@@ -49,17 +55,18 @@ def clean_target(dataset):
     if 'Price' not in dataset.columns:
         print(" 'Price' Column not include on the dataset.")
         return dataset
-    return price_to_usd(dataset)['Price']
-
-
-def import_data(dataset_url):
-    dataset=pd.read_csv(dataset_url)
+    dataset['Price'] = price_to_usd(dataset)['Price']
     return dataset
-    
 
-def split_data(dataset, test_size=0.2, random_state=42):
-    train_set, test_set = train_test_split(dataset, test_size=test_size, random_state=random_state)
-    return train_set, test_set
+def target_extraction(dataset):
+    if 'Price' not in dataset.columns:
+        print(" 'Price' Column not include on the dataset.")
+        return dataset
+    return clean_target(dataset)['Price']
+
+def log_target(target):
+    extracted_target = target_extraction(target)
+    return np.log(extracted_target)
 
 
 def comparison(x_test,y_test, pipeline, model, confidence = 0.95):
@@ -81,7 +88,7 @@ def comparison(x_test,y_test, pipeline, model, confidence = 0.95):
     return final_rmse_usd, interval_usd
 
 
-def save_results_txt(best_params, rmse, confidence_interval, file_name="results/model_report.txt"):
+def save_results_txt(best_params, rmse, confidence_interval, file_name="models/results/model_report.txt"):
     """
     Saves model metrics and hyperparameters to a text file.
     Automatically creates the destination folder if it doesn't exist.
@@ -124,5 +131,5 @@ def export_model(model, pipeline, file_name="models/final_model_prod.pkl"):
         "full_pipeline": pipeline
     }
     
-    joblib.dump(data_to_save, file_name)
+    joblib.dump(data_to_save, file_name, compress=3)
     print(f"Model and Pipeline exported to: {file_name}")

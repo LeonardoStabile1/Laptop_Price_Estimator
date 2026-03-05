@@ -18,8 +18,11 @@ class DataCleaner(BaseEstimator, TransformerMixin):
         if self.op_sys_col in X_copy.columns:
             X_copy[self.op_sys_col] = X_copy[self.op_sys_col].fillna("No Operation System")
 
-        if 'Memory' in X_copy.columns:
+        if ('Memory') in X_copy.columns:
             X_copy = X_copy.drop(columns=['Memory'])
+
+        if ('indx') in X_copy.columns:
+            X_copy = X_copy.drop(columns=['indx'])
 
         return X_copy
     

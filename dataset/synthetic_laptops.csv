@@ -1,0 +1,11 @@
+Company,TypeName,Inches,touchscreen,ipspanel,retinadisplay,resolution_width,resolution_height,cpu_brand,cpu_name,cpu_speed,Ram,Memory,hdd,ssd,flashstorage,hybrid,gpu_brand,gpu_name,OpSys,Weight_kg
+MSI,Notebook,13.3,0,1,0,2560,1080,Intel, Core i5 7200U ,2.7,8,1TB HDD,500,0,0,1024,Nvidia, HD Graphics 620,others,1.38
+Dell,Ultrabook,12.5,0,1,0,1366,1080,Intel, Core i5 7200U ,2.0,8,256GB SSD,0,0,0,0,Nvidia, Radeon 530,windows,4.6
+Apple,Notebook,17.3,0,1,0,1366,1080,Intel, Core i7 7600U ,2.9,8,256GB SSD,0,512,0,0,Intel, GeForce GTX 1060,windows,1.94
+HP,Notebook,17.3,0,0,0,1920,1800,Intel, Core i5 7200U ,2.8,4,128GB SSD +  1TB HDD,2048,1024,0,0,Intel, GeForce GTX 1070,windows,1.68
+HP,Notebook,11.6,0,0,0,1366,900,Intel, Core i3 6100U ,2.7,16,512GB SSD,500,256,0,0,Intel, GeForce 920MX,linux,1.91
+Toshiba,Notebook,15.6,0,0,0,1920,1080,AMD, Core i7 7700HQ ,2.5,8,64GB Flash Storage,0,0,0,0,Intel, Radeon R7 M445,windows,2.0
+Dell,Netbook,15.6,0,0,0,1920,1080,AMD, Core i5 7300HQ ,2.3,4,8GB SSD,0,0,0,0,Nvidia, HD Graphics 630,windows,2.3
+Lenovo,Notebook,17.3,1,1,0,1366,768,Intel, Core i3 6006U 2,1.1,4,1TB HDD,1024,256,32,0,Intel, HD Graphics 520,windows,2.7
+HP,Workstation,17.3,0,0,0,1920,1080,Intel, Celeron Dual Core N3060 ,2.7,4,256GB SSD +  1TB HDD,0,256,0,0,Nvidia, HD Graphics 530,windows,3.8
+Apple,Ultrabook,15.6,1,0,0,1920,1080,Intel, Core i5 ,2.5,4,32GB Flash Storage,2048,256,0,0,Nvidia, Radeon R7 M445,windows,2.8
