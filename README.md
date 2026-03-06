@@ -16,19 +16,21 @@ The model was trained using the [Laptop Price Dataset](https://www.kaggle.com/da
 This project folder structure is organized as follows
 
 ```
-├── data/                   # Raw dataset
+├── dataset/                # Raw dataset and Synthetic dataset
+├── figures/                # Relevant figures
 ├── models/                 # Saved model & pipeline
 |   ├── model.pkl           # Model and pipeline stored
 |   ├── results/            # Training reports and performance logs
 |   └── evaluate.py         # Script that evaluates the model on an independent dataset
-├── figures/                # Relevant figures
 ├── scripts/                # Source code for training and processing
 │   ├── model_train.py      # Main execution script
 |   ├── functions.py        # Custom Functions for this project
 |   ├── classes.py          # Custom Scikit-Learn transformers
 |   ├── ml_algorithm.py     # Contains the Routines that implements RandomFortestRegression
 │   └── pipelines.py        # Pipelines
-└── requirements.txt        # Library dependencies
+├── README.md               # This readme
+├── .gitignore              # gitignore file
+└── Project.ipynb           # Jupyter notebook containing the Exploratory Data Analysis
 ```
 
 ## Project Architecture
