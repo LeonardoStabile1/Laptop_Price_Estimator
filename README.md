@@ -3,6 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.13-blue)
 ![Pandas](https://img.shields.io/badge/Lib-Pandas-150458)
 ![Scikit-Learn](https://img.shields.io/badge/Lib-ScikitLearn-F7931E)
+![XGBoost](https://img.shields.io/badge/Lib-XGBoost-F7931E)
 ![Status](https://img.shields.io/badge/Status-Finished-success)
 
 This project implements a Machine Learning pipeline to predict laptop prices based on technical specifications. It features a robust data preprocessing workflow and a fine-tuned Random Forest model.
@@ -38,7 +39,7 @@ This project folder structure is organized as follows
 
 The overall architecture of this project follows the diagram.
 
-![](figures/diagram.jpg)
+![](figures/Diagram.jpg)
 
 Among the `.py` files, there are some main categories:
 - Auxiliary files: `functions.py, classes.py, model_train.py, pipelines.py`
