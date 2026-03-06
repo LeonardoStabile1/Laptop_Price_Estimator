@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.13-blue)
 ![Pandas](https://img.shields.io/badge/Lib-Pandas-150458)
 ![Scikit-Learn](https://img.shields.io/badge/Lib-ScikitLearn-F7931E)
-![Status](https://img.shields.io/badge/Status-Finishing-success)
+![Status](https://img.shields.io/badge/Status-Finished-success)
 
 This project implements a Machine Learning pipeline to predict laptop prices based on technical specifications. It features a robust data preprocessing workflow and a fine-tuned Random Forest model.
 
@@ -36,7 +36,7 @@ This project folder structure is organized as follows
 
 The overall architecture of this project follows the diagram.
 
-![](figures/Schema.png)
+![](figures/diagram.jpg)
 
 Among the `.py` files, there are some main categories:
 - Auxiliary files: `functions.py, classes.py, model_train.py, pipelines.py`
@@ -109,7 +109,7 @@ The following figure illustrates the relationship between the actual market pric
 
 ---
 
-## 🔍 Key Insights
+## Key Insights
 
 ### What do these metrics mean?
 * **RMSE ($195.61):** On average, the model's price predictions deviate from the actual market price by approximately **$195.61**. Considering the laptop market features high variance—with prices ranging from $200 budget netbooks to $3,000+ high-end gaming rigs—this error margin demonstrates that the model captures underlying pricing patterns highly effectively.
